@@ -43,6 +43,7 @@ class IndicadorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Indicador
         fields = [
+            "nombre",
             "codigo",
             "alcance",
             "periodicidad",
