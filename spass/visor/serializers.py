@@ -6,6 +6,9 @@ from .models import *
 
 #Serializadores de modelos para rest api
 class MedicionIndicadorSerializer(serializers.HyperlinkedModelSerializer):
+    indicador = serializers.PrimaryKeyRelatedField(read_only=True)
+    area = serializers.PrimaryKeyRelatedField(read_only=True)
+    valores_factor = serializers.StringRelatedField(read_only=True,many=True)
     class Meta:
         model = MedicionIndicador
         fields = [
@@ -29,6 +32,9 @@ class EjeSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ResultadoSerializer(serializers.HyperlinkedModelSerializer):
+    #eje = serializers.StringRelatedField()
+    eje = serializers.SlugRelatedField(read_only=True, slug_field='id')
+   
     class Meta:
         model = Resultado
         fields = [
@@ -40,6 +46,11 @@ class ResultadoSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class IndicadorSerializer(serializers.HyperlinkedModelSerializer):
+    factores_desagregacion = serializers.StringRelatedField(many=True)
+    #fuentes_verificacion  = serializers.PrimaryKeyRelatedField(many=True,read_only=True)
+    fuentes_verificacion  = serializers.StringRelatedField(many=True)
+    instituciones  = serializers.PrimaryKeyRelatedField(many=True,read_only=True)
+    resultado  = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Indicador
         fields = [
@@ -50,6 +61,12 @@ class IndicadorSerializer(serializers.HyperlinkedModelSerializer):
             "fuente_informacion",
             "notas",
             "informacion_requerida",
+            "factores_desagregacion",
+            "fuentes_verificacion",
+            "instituciones",
+            "resultado",
+        ]
+        read_only_fields = [
             "factores_desagregacion",
             "fuentes_verificacion",
             "instituciones",
@@ -85,16 +102,22 @@ class FactorDesagregacionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ValorFactorSerializer(serializers.HyperlinkedModelSerializer):
+    categoria = serializers.PrimaryKeyRelatedField(read_only=True)
+    categoria_nombre = serializers.SlugRelatedField(source='categoria',slug_field='nombre',read_only=True,)
+
     class Meta:
         model = ValorFactor
         fields = [
             "valor",
             "codigo",
             "categoria",
+            "categoria_nombre"
         ]
 
 
 class FormulaSerializer(serializers.HyperlinkedModelSerializer):
+    indicador =  serializers.PrimaryKeyRelatedField(read_only=True)
+    indicador_nombre = serializers.SlugRelatedField(source='indicador',slug_field='nombre',read_only=True)
     class Meta:
         model = Formula
         fields = [
@@ -102,30 +125,37 @@ class FormulaSerializer(serializers.HyperlinkedModelSerializer):
             "formula",
             "codigo",
             "indicador",
+            'indicador_nombre',
         ]
 
 
 class VariableSerializer(serializers.HyperlinkedModelSerializer):
+    formula = serializers.PrimaryKeyRelatedField(read_only=True)
+    formula_formula = serializers.SlugRelatedField(source='formula',slug_field='formula',read_only=True)
     class Meta:
         model = Variable
         fields = [
             "nombre",
             "tipo",
-            "formula",
+            "formula",'formula_formula'
         ]
 
 
 class UnidadMedidaSerializer(serializers.HyperlinkedModelSerializer):
+    variable = serializers.PrimaryKeyRelatedField(read_only=True)
+    variable_nombre = serializers.SlugRelatedField(source='variable',slug_field='nombre',read_only=True)
     class Meta:
         model = UnidadMedida
         fields = [
             "nombre",
             "simbolo",
             "variable",
+            'variable_nombre'
         ]
 
 
 class AreaSerializer(serializers.HyperlinkedModelSerializer):
+    municipio = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Area
         fields = [
@@ -136,6 +166,7 @@ class AreaSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class MunicipioSerializer(serializers.HyperlinkedModelSerializer):
+    departamento = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Municipio
         fields = [
@@ -155,6 +186,8 @@ class DepartamentoSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ValorVariableSerializer(serializers.HyperlinkedModelSerializer):
+    variable = serializers.PrimaryKeyRelatedField(read_only=True)
+    medicion = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = ValorVariable
         fields = [

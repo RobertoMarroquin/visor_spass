@@ -2,7 +2,7 @@
 from django.shortcuts import render
 
 #librerias de 3ros
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 
 #librerias propias
 from .models import *
@@ -33,6 +33,8 @@ class ResultadoViewSet(viewsets.ModelViewSet):
     queryset = Resultado.objects.all()
     serializer_class = ResultadoSerializer
     permission_classes = [permissions.AllowAny]
+
+    
 
 
 
@@ -113,3 +115,83 @@ class ValorVariableViewSet(viewsets.ModelViewSet):
     queryset = ValorVariable.objects.all()
     serializer_class = ValorVariableSerializer
     permission_classes = [permissions.AllowAny]
+
+
+
+#-------------------------------------------------------#
+#------------------------Detalle------------------------#
+class MedicionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MedicionIndicador.objects.all()
+    serializer_class = MedicionIndicadorSerializer
+
+class EjeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Eje.objects.all()
+    serializer_class = EjeSerializer
+
+
+class MedicionIndicadorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MedicionIndicador.objects.all()
+    serializer_class = MedicionIndicadorSerializer
+
+
+class ResultadoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Resultado.objects.all()
+    serializer_class = ResultadoSerializer
+    
+
+
+
+class IndicadorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Indicador.objects.all()
+    serializer_class = IndicadorSerializer
+
+
+class InstitucionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Institucion.objects.all()
+    serializer_class = InstitucionSerializer
+
+
+class FuenteVerificacionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FuenteVerificacion.objects.all()
+    serializer_class = FuenteVerificacionSerializer
+
+
+class FactorDesagregacionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FactorDesagregacion.objects.all()
+    serializer_class = FactorDesagregacionSerializer
+
+
+class ValorFactorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ValorFactor.objects.all()
+    serializer_class = ValorFactorSerializer
+
+
+class FormulaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Formula.objects.all()
+    serializer_class = FormulaSerializer
+
+
+class VariableDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Variable.objects.all()
+    serializer_class = VariableSerializer
+
+
+class UnidadMedidaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UnidadMedida.objects.all()
+    serializer_class = UnidadMedidaSerializer
+
+class AreaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
+
+class MunicipioDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Municipio.objects.all()
+    serializer_class = MunicipioSerializer
+
+class DepartamentoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Departamento.objects.all()
+    serializer_class = DepartamentoSerializer
+
+class ValorVariableDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ValorVariable.objects.all()
+    serializer_class = ValorVariableSerializer
